@@ -69,3 +69,7 @@ p{
     font-weight: bold;
     color:hs1(0,0%,0%, 0.75);
 }
+.weatherIcon {
+    width: 50px; /* Adjust this value as needed */
+    height: 50px; /* Adjust this value as needed */
+}

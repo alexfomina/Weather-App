@@ -67,7 +67,7 @@ function displayWeatherInfo(data){
     //destructure data to extract relevant information
     const {name: city, 
         main: {temp, humidity}, 
-        weather: [{description}]} = data;
+        weather: [{description, id}]} = data;
     
     //clear card of any existing content
     card.textContent = "";
@@ -78,6 +78,7 @@ function displayWeatherInfo(data){
     const tempDisplay = document.createElement("p");
     const humidityDisplay = document.createElement("p");
     const descriptionDisplay = document.createElement("p");
+    const weatherIcon = document.createElement("img");
 
     //set content for each element
     cityDisplay.textContent = city;
@@ -85,18 +86,52 @@ function displayWeatherInfo(data){
     humidityDisplay.textContent = `Humidity: ${humidity}%`;
     descriptionDisplay.textContent = description;
 
-    //apply css style to variable
+    // Set weather icon based on weather condition
+    switch (Math.floor(id / 100)) {
+        case 2: // Thunderstorm
+            weatherIcon.src = "images/thunderstorm.png";
+            break;
+        case 3: // Drizzle
+            weatherIcon.src = "images/drizzle.png";
+            break;
+        case 5: // Rain
+            weatherIcon.src = "images/rain.png";
+            break;
+        case 6: // Snow
+            weatherIcon.src = "images/snow.png";
+            break;
+        case 7: // Atmosphere
+            weatherIcon.src = "images/atmosphere.png";
+            break;
+        case 8: // Clear or Clouds
+            if (id === 800) {
+                weatherIcon.src = "images/clear.png";
+            } else {
+                weatherIcon.src = "images/clouds.png";
+            }
+            break;
+        default: // Other conditions
+            weatherIcon.src = "images/clouds.png";
+            break;
+    }
+
+    //apply css style to variables
     cityDisplay.classList.add("cityDisplay");
     tempDisplay.classList.add("tempDisplay");
     humidityDisplay.classList.add("humidityDisplay");
     descriptionDisplay.classList.add("descriptionDisplay");
+    
+    // Add CSS styling for the weather icon
+    weatherIcon.classList.add("weatherIcon");
 
     //append elements to the card container
     card.appendChild(cityDisplay);
+    card.appendChild(weatherIcon);
     card.appendChild(tempDisplay);
     card.appendChild(humidityDisplay);
     card.appendChild(descriptionDisplay);
 } 
+
 
 //function to display error message
 function displayError(message){

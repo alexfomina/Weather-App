@@ -1,6 +1,5 @@
-// jest.config.js
 module.exports = {
-    testEnvironment: 'jsdom',
+    testEnvironment: 'jest-environment-jsdom-sixteen',
     setupFilesAfterEnv: ['<rootDir>/setupTests.js'], // Optional: if you have a setup file
   };
   

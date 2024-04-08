@@ -1,6 +1,9 @@
 // setupTests.js
 const { JSDOM } = require('jsdom');
 
+// Mock TextEncoder
+global.TextEncoder = require('util').TextEncoder;
+
 const dom = new JSDOM('<!doctype html><html><body></body></html>', {
   url: 'https://example.com', // Set a URL to mimic a complete browser environment
   pretendToBeVisual: true, // Pretend to be a visual browser, enabling certain features like scrollIntoView

@@ -40,24 +40,30 @@ weatherForm.addEventListener("submit", async event => {
 });
 
 //function to fetch weather data
-async function getWeatherData(city){
-    //construct API url with given city and API key
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+async function getWeatherData(city) {
+    try {
+        //construct API url with given city and API key
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
 
-    //fetch data from API
-    const response = await fetch(apiUrl);
+        //fetch data from API
+        const response = await fetch(apiUrl);
 
-    //log response for debugging
-    //console.log(response);
+        //log response for debugging
+        //console.log(response);
 
-    //check status code to see if response was successful
-    if(!response.ok)
-    {
-        throw new Error("Could not fetch weather data");
+        //check status code to see if response was successful
+        if (!response.ok) {
+            throw new Error("Could not fetch weather data");
+        }
+        //parse the JSON response data
+        return await response.json();
+    } catch (error) {
+        //handle errors during data fetching
+        console.error(error);
+        throw error; // rethrow the error to be caught by the caller
     }
-    //parse the JSON response data
-    return await response.json();
 }
+
 
 //function to display weather information
 function displayWeatherInfo(data){

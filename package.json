@@ -3,6 +3,9 @@
   "lockfileVersion": 3,
   "requires": true,
   "packages": {},
+  "scripts": {
+    "test": "jest"
+  },
   "devDependencies": {
     "jest": "^29.7.0"
   }

@@ -120,6 +120,38 @@ function displayWeatherInfo(data){
     tempDisplay.classList.add("tempDisplay");
     humidityDisplay.classList.add("humidityDisplay");
     descriptionDisplay.classList.add("descriptionDisplay");
+// Add CSS styling for the weather icon
+    weatherIcon.classList.add("weatherIcon");
+
+    //append elements to the card container
+    card.appendChild(cityDisplay);
+    card.appendChild(weatherIcon);
+    card.appendChild(tempDisplay);
+    card.appendChild(humidityDisplay);
+    card.appendChild(descriptionDisplay);
+}
+
+
+//function to display error message
+function displayError(message){
+
+    //create an element to display the error message
+    const errorDisplay = document.createElement("p");
+    errorDisplay.textContent = message;
+    errorDisplay.classList.add("errorDisplay");
+
+    //clear existing content from card
+    card.textContent = "";
+    card.style.display = "flex";
+
+    //append the error message to card
+    card.appendChild(errorDisplay);
+}
+
+<<<<<<< HEAD
+=======
+    
+>>>>>>> origin/fix-weather-icons
     // Add CSS styling for the weather icon
     weatherIcon.classList.add("weatherIcon");
 

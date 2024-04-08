@@ -1,4 +1,4 @@
-# Weather-App
+# Weather-App- last updated 04/03/24
 This is a basic weather app that pulls data from Open Weather API to return the current temperature, humidity and weather status based on the entered city. 
 
 Running the application:

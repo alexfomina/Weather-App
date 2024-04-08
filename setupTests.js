@@ -20,14 +20,28 @@ const dom = new JSDOM('<!doctype html><html><body></body></html>', {
 global.window = dom.window;
 global.document = dom.window.document;
 
-// Mock localStorage
+// Custom mock for localStorage
+const localStorageMock = (() => {
+  let store = {};
+  return {
+    getItem: function (key) {
+      return store[key] || null;
+    },
+    setItem: function (key, value) {
+      store[key] = value.toString();
+    },
+    removeItem: function (key) {
+      delete store[key];
+    },
+    clear: function () {
+      store = {};
+    }
+  };
+})();
+
+// Assign the localStorage mock to the global object
 Object.defineProperty(global, 'localStorage', {
-  value: {
-    getItem: jest.fn(),
-    setItem: jest.fn(),
-    removeItem: jest.fn(),
-    clear: jest.fn(),
-  },
+  value: localStorageMock
 });
 
 // Assign navigator object to the global object

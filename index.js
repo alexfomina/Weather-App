@@ -1,5 +1,5 @@
-// WEATHER APP
 
+//WORKING VERSION BELOW
 // Select elements from the DOM
 const weatherForm = document.querySelector(".weatherForm");
 const cityInput = document.querySelector(".cityInput");
@@ -48,37 +48,79 @@ async function getWeatherData(city) {
     return await response.json();
 }
 
-// Function to display weather information
-function displayWeatherInfo(data) {
-    // Destructure data to extract relevant information
-    const {
-        name: city,
-        main: { temp, humidity },
-        weather: [{ description, id }],
-    } = data;
+//function to display weather information
+function displayWeatherInfo(data){
+    //check console to see if information was properly pulled
+    //console.log(data);
 
-    // Clear card of any existing content
+    //destructure data to extract relevant information
+    const {name: city, 
+        main: {temp, humidity}, 
+        weather: [{description, id}]} = data;
+    
+    //clear card of any existing content
     card.textContent = "";
     card.style.display = "flex";
 
-    // Create elements to display weather info
+    //create elements to display weather info
     const cityDisplay = document.createElement("h1");
     const tempDisplay = document.createElement("p");
     const humidityDisplay = document.createElement("p");
     const descriptionDisplay = document.createElement("p");
+    const weatherIcon = document.createElement("img");
 
-    // Set content for each element
+    //set content for each element
     cityDisplay.textContent = city;
     tempDisplay.textContent = `${(temp - 273.15).toFixed(1)}°C`;
     humidityDisplay.textContent = `Humidity: ${humidity}%`;
     descriptionDisplay.textContent = description;
 
-    // Append elements to the card container
+    // Set weather icon based on weather condition
+    switch (Math.floor(id / 100)) {
+        case 2: // Thunderstorm
+            weatherIcon.src = "images/thunderstorm.png";
+            break;
+        case 3: // Drizzle
+            weatherIcon.src = "images/drizzle.png";
+            break;
+        case 5: // Rain
+            weatherIcon.src = "images/rain.png";
+            break;
+        case 6: // Snow
+            weatherIcon.src = "images/snow.png";
+            break;
+        case 7: // Atmosphere
+            weatherIcon.src = "images/atmosphere.png";
+            break;
+        case 8: // Clear or Clouds
+            if (id === 800) {
+                weatherIcon.src = "images/clear.png";
+            } else {
+                weatherIcon.src = "images/clouds.png";
+            }
+            break;
+        default: // Other conditions
+            weatherIcon.src = "images/clouds.png";
+            break;
+    }
+
+    //apply css style to variables
+    cityDisplay.classList.add("cityDisplay");
+    tempDisplay.classList.add("tempDisplay");
+    humidityDisplay.classList.add("humidityDisplay");
+    descriptionDisplay.classList.add("descriptionDisplay");
+    
+    // Add CSS styling for the weather icon
+    weatherIcon.classList.add("weatherIcon");
+
+    //append elements to the card container
     card.appendChild(cityDisplay);
+    card.appendChild(weatherIcon);
     card.appendChild(tempDisplay);
     card.appendChild(humidityDisplay);
     card.appendChild(descriptionDisplay);
-}
+} 
+
 
 // Function to display error message
 function displayError(message) {
@@ -94,3 +136,5 @@ function displayError(message) {
     // Append the error message to card
     card.appendChild(errorDisplay);
 }
+
+

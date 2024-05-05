@@ -5,6 +5,10 @@ const weatherForm = document.querySelector(".weatherForm");
 const cityInput = document.querySelector(".cityInput");
 const card = document.querySelector(".card");
 const apiKey = "2a7373ef312e6b15d29a6eda3c3af427";
+const unitSwitch = document.querySelector(".unitSwitch")
+var weatherData;
+var useCelsius = false;
+
 
 //add event listener to the form
 weatherForm.addEventListener("submit", async event => {
@@ -22,7 +26,7 @@ weatherForm.addEventListener("submit", async event => {
     {
         try{
             //fetch weather data for given city
-            const weatherData = await getWeatherData(city);
+            weatherData = await getWeatherData(city);
             //display weather information if successful
             displayWeatherInfo(weatherData);
         }
@@ -76,12 +80,16 @@ function displayWeatherInfo(data){
     //create elements to display weather info
     const cityDisplay = document.createElement("h1");
     const tempDisplay = document.createElement("p");
+    tempDisplay.id = "tempDisplay"
     const humidityDisplay = document.createElement("p");
     const descriptionDisplay = document.createElement("p");
 
     //set content for each element
     cityDisplay.textContent = city;
-    tempDisplay.textContent = `${(temp - 273.15).toFixed(1)}°C`;
+
+    tempDisplay.textContent = calcTemp(temp);
+
+
     humidityDisplay.textContent = `Humidity: ${humidity}%`;
     descriptionDisplay.textContent = description;
 
@@ -112,4 +120,26 @@ function displayError(message){
 
     //append the error message to card
     card.appendChild(errorDisplay);
+}
+
+unitSwitch.addEventListener("click", function() {
+    useCelsius = !useCelsius;
+    var far = document.getElementById("Far");
+    var cel = document.getElementById("Cel");
+    if(useCelsius){
+        cel.style.color = "#8C8C8C";
+        far.style.color = "#B3B6B7";
+    } else {
+        far.style.color = "#8C8C8C";
+        cel.style.color = "#B3B6B7";
+    }
+    displayWeatherInfo(weatherData);
+})
+
+function calcTemp(temp){
+    if(useCelsius){
+        return `${(temp - 273.15).toFixed(1)}°C`;
+    } else {
+        return `${((temp - 273.15) * 1.8 +32).toFixed(1)}°F`;
+    }
 }
